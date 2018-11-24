@@ -39,11 +39,17 @@ int main(int argc, char **argv){
 		return -1;
 	}
 	int degree = atoi(argv[1]);
+
 	BusMotor motor;
-	int ret = motor.init("/dev/ttyS0");
+	int ret = motor.init("/dev/ttyAMA0");
 	if(ret < 0){
 		printf("init serial port failed\n");
 		return -1;
+	}
+
+	// reset zero degree
+	if(degree == 361){
+
 	}
 	int motor_id[4];
 	float rotate_degree[4];

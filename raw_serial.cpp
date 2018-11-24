@@ -71,6 +71,9 @@ int RawSerial::raw_send(const unsigned char* send_buf, int size){
 		perror("write failed\n");
 		return -1;
 	}
+#if DEBUG_SERIAL_OUTPUT
+	printf("write returned\n");
+#endif
 	return 0;
 }
 
@@ -83,17 +86,15 @@ int RawSerial::read_respond(unsigned char* responds, unsigned int size, unsigned
 	unsigned int readlen = 0;						//实际读到的字节数
 	unsigned char * ptr;
 	/*传入的timeout是ms级别的单位，这里需要转换为struct timeval 结构的*/
-	int timeout = 100;
+	int timeout = 1;
 	tv.tv_sec  = timeout / 1000;
 	tv.tv_usec = (timeout%1000)*1000;
 	if( write_position >= size){
 		printf("write position error\n");
 	}
 	ptr = responds + write_position;							//读指针，每次移动，因为实际读出的长度和传入参数可能存在差异
-
 	FD_ZERO(&rfds);						//清除文件描述符集合
 	FD_SET(sp_fd_,&rfds);					//将fd加入fds文件描述符，以待下面用select方法监听
-
 	/*TODO:防止读数据长度超过缓冲区*/
 	//one method
 //	int start = get_ticks();
@@ -103,7 +104,6 @@ int RawSerial::read_respond(unsigned char* responds, unsigned int size, unsigned
 	while(readlen < size)
 	{
 		sret = select(sp_fd_+1,&rfds,NULL,NULL,&tv);		//检测串口是否可读
-
 		if(sret == -1)										//检测失败
 		{
 			perror("select:");
@@ -111,7 +111,9 @@ int RawSerial::read_respond(unsigned char* responds, unsigned int size, unsigned
 		}
 		else if(sret > 0)									//检测成功可读
 		{
+//			printf("before read\n");
 			ret = read(sp_fd_,ptr,1);
+//			printf("after read\n");
 			//printf("sec: %d,usec: %d\n",tv.tv_sec,tv.tv_usec);
 #if DEBUG_SERIAL_OUTPUT
 			printf("0x%02X ", *ptr);

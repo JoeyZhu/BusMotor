@@ -33,7 +33,7 @@ int BusMotor::rotate(int motor_id[], float rotate_degree[]){
 		if(rotate_degree[i] > 360.0){
 			printf("WARNING, rotate degree too large: %f\n", rotate_degree[i]);
 		}
-		rotate_value[i] = (int)(rotate_degree[i] / 360.0 * 16384);
+		rotate_value[i] = (int)(rotate_degree[i] / 360.0 * 16384*2);
 		printf("rotate_value %d: %d\n", i, rotate_value[i]);
 	}
 	cmd_buffer[1] = ((rotate_value[0] & 0xFF00) >> 8);

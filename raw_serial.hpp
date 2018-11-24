@@ -9,7 +9,7 @@
 #define RAW_SERIAL_HPP_
 
 #define BAUD_RATE 		(2000000)
-#define READ_WAIT_TIME	1		// in 100ms
+#define READ_WAIT_TIME	10		// in 100ms
 #define MIN_NUM_RX 		1
 
 #define TRUE 1
