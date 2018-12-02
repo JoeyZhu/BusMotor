@@ -6,6 +6,8 @@ set (CMAKE_CXX_STANDARD 11)
 set( CMAKE_BUILD_TYPE "Release" )
 set( CMAKE_CXX_FLAGS "-std=c++11 -O3" )
 
+find_package( Threads )
+
 add_library(RawSerial raw_serial.cpp)
 add_library(BusMotor bus_motor.cpp)
 
@@ -14,7 +16,7 @@ add_executable (raw_serial_test main.cpp)
 add_dependencies(BusMotor RawSerial)
 add_dependencies(raw_serial_test RawSerial BusMotor)
 
-target_link_libraries (BusMotor RawSerial)
+target_link_libraries (BusMotor RawSerial ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries (raw_serial_test RawSerial BusMotor
 )
 

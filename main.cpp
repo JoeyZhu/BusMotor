@@ -49,16 +49,29 @@ int main(int argc, char **argv){
 
 	// reset zero degree
 	if(degree == 361){
-
+		motor.set_zero();
+		motor.quit();
+		exit(0);
 	}
-	int motor_id[4];
-	float rotate_degree[4];
-	motor_id[0] = 1;
-	rotate_degree[0] = degree;
-	rotate_degree[1] = 0;
-	rotate_degree[2] = 0;
-	rotate_degree[3] = 0;
-	motor.rotate(motor_id, rotate_degree);
+
+	std::vector<float> rotate_degree;
+	rotate_degree.push_back(180.0);
+	rotate_degree.push_back(180.0);
+	rotate_degree.push_back(0.0);
+	rotate_degree.push_back(0.0);
+	motor.rotate(rotate_degree);
+
+	rotate_degree.clear();
+	rotate_degree.push_back(degree);
+	rotate_degree.push_back(degree);
+	rotate_degree.push_back(0);
+	rotate_degree.push_back(0);
+//	motor.rotate(rotate_degree);
+
+	motor.slow_rotate_to(rotate_degree);
+
+	std::this_thread::sleep_for(std::chrono::seconds(10));
+
 	motor.quit();
 }
 
