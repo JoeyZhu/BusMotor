@@ -29,9 +29,10 @@ class BusMotor{
 	std::thread slow_rotate_thread;
 	int running_;
 	int update_period_;
-	int rotate_speed_;	// degree / second
-	std::vector<float> degree_;
+	float rotate_speed_;	// degree / second
+	std::vector<float> set_degree_;
 	std::vector<float> degree_pre_;
+	int new_degree_;
 };
 
 

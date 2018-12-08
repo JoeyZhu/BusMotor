@@ -16,7 +16,7 @@
 #include <sys/select.h>
 #include <termios.h>	/*PPSIX 终端控制定义*/
 
-#define DEBUG_SERIAL_OUTPUT 1	// output raw serial rx output
+#define DEBUG_SERIAL_OUTPUT 0	// output raw serial rx output
 
 RawSerial::RawSerial(void){
 	memset(serial_port_, 0, sizeof(serial_port_));

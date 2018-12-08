@@ -33,7 +33,6 @@ int main(int argc, char **argv){
 */
 
 	// test BusMotor
-
 	if(argc != 2){
 		printf("usage: ./exe degree\n");
 		return -1;
